@@ -19,7 +19,7 @@ column1 = [[sg.Text('Column 1', background_color='#F7F3EC', justification='cente
 
 layout = [
     [sg.Menu(menu_def, tearoff=True)],
-    [sg.Text('All graphic widgets in one window!', size=(30, 1), justification='center', font=("Helvetica", 25), relief=sg.RELIEF_RIDGE)],
+    [sg.Text('Sparrow', size=(30, 1), justification='center', font=("Helvetica", 25), relief=sg.RELIEF_RIDGE)],
     [sg.Text('Here is some text.... and a place to enter text')],
     [sg.InputText('This is my text')],
     [sg.Frame(layout=[
@@ -44,7 +44,7 @@ layout = [
 ]
 
 
-window = sg.Window('Everything bagel', layout, default_element_size=(40, 1), grab_anywhere=False)
+window = sg.Window('Sparrow v1', layout, default_element_size=(40, 1), grab_anywhere=False)
 
 event, values = window.read()
 
