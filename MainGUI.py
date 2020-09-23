@@ -1,10 +1,12 @@
 #!/usr/bin/env Python3
 import PySimpleGUI as sg
+import cv2
 
 # Use this to preview themes
 # sg.preview_all_look_and_feel_themes()
 
-sg.ChangeLookAndFeel('DarkGrey9')
+# FIXME | Test with DarkGrey9
+sg.ChangeLookAndFeel('Default')
 
 # ------ Menu Definition ------ #
 menu_def = [['File', ['Open', 'Save', 'Exit', 'Properties']],
@@ -19,41 +21,33 @@ column1 = [[sg.Text('Column 1', background_color='#F7F3EC', justification='cente
 
 layout = [
     [sg.Menu(menu_def, tearoff=True)],
-    [sg.Text('Sparrow', size=(30, 1), justification='center', font=("Helvetica", 25), relief=sg.RELIEF_RIDGE)],
-    [sg.Text('Here is some text.... and a place to enter text')],
-    [sg.InputText('This is my text')],
-    [sg.Frame(layout=[
-        [sg.Checkbox('Checkbox', size=(10, 1)), sg.Checkbox('My second checkbox!', default=True)],
-        [sg.Radio('My first Radio!     ', "RADIO1", default=True, size=(10, 1)),
-         sg.Radio('My second Radio!', "RADIO1")]], title='Options', title_color='red', relief=sg.RELIEF_SUNKEN,
-        tooltip='Use these to set flags')],
-    [sg.Multiline(default_text='This is the default Text should you decide not to type anything', size=(35, 3)),
-     sg.Multiline(default_text='A second multi-line', size=(35, 3))],
-    [sg.InputCombo(('Combobox 1', 'Combobox 2'), size=(20, 1)),
-     sg.Slider(range=(1, 100), orientation='h', size=(34, 20), default_value=85)],
-    [sg.InputOptionMenu(('Menu Option 1', 'Menu Option 2', 'Menu Option 3'))],
-    [sg.Listbox(values=('Listbox 1', 'Listbox 2', 'Listbox 3'), size=(30, 3)),
-     sg.Frame('Labelled Group', [[
-         sg.Slider(range=(1, 100), orientation='v', size=(5, 20), default_value=25),
-         sg.Slider(range=(1, 100), orientation='v', size=(5, 20), default_value=75),
-         sg.Slider(range=(1, 100), orientation='v', size=(5, 20), default_value=10),
-         sg.Column(column1, background_color='#F7F3EC')]])],
-    [sg.Text('_' * 80)],
-    [sg.Text('Choose A Folder', size=(35, 1))],
-    [sg.Text('Your Folder', size=(15, 1), auto_size_text=False, justification='right'),
+    [sg.Text('Sparrow', size=(55, 1), justification='center', font=("Helvetica", 25), relief=sg.RELIEF_RIDGE)],
+    [sg.Text('Video Storage Location', size=(17, 1), auto_size_text=False, justification='left'),
      sg.InputText('Default Folder'), sg.FolderBrowse()],
+    [sg.Button('Record', button_color=('white', 'red')), sg.Button('Pause', button_color=('black', 'yellow')),
+     sg.Button('Stop', button_color=('white', 'black'))],
+    [sg.Image(filename='', key='_IMAGE_',size=(40, 40))],
     [sg.Submit(tooltip='Click to submit this window'), sg.Cancel()]
 ]
 
 # Keep no_titlebar == True to disable title bar
 # Dimensions hardcoded to screen values
-window = sg.Window('Sparrow v1', layout, no_titlebar=True, default_element_size=(40, 1), grab_anywhere=False,
+# Add element_justification='c' to center the elements
+window = sg.Window('Sparrow v1', layout, no_titlebar=False, default_element_size=(40, 1), grab_anywhere=False,
                    location=(0, 0), size=(1024, 600), keep_on_top=True).Finalize()
 
 # Maximize the window automatically
 # window.Maximize()
 
-event, values = window.read()
+# event, values = window.read()
+cap = cv2.VideoCapture(0)                               # Setup the OpenCV capture device (webcam)
+while True:
+    event, values = window.read(timeout=20, timeout_key='timeout')
+    if event in (sg.WIN_CLOSED, 'Cancel'):
+        break
+    ret, frame = cap.read()  # Read image from capture device (camera)
+    imgbytes = cv2.imencode('.png', frame)[1].tobytes()  # Convert the image to PNG Bytes
+    window.FindElement('_IMAGE_').Update(data=imgbytes)  # Change the Image Element to show the new image
 
 window.close()
 
