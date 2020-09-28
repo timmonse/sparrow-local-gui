@@ -51,8 +51,8 @@ layout = [
 # Keep no_titlebar == True to disable title bar
 # Dimensions hardcoded to screen values
 # Add element_justification='c' to center the elements
-window = sg.Window('Sparrow v1', layout, no_titlebar=True, default_element_size=(40, 1), grab_anywhere=False,
-                   location=(0, 0), size=(1024, 600), keep_on_top=True).Finalize()
+window = sg.Window('Sparrow v1', layout, no_titlebar=False, default_element_size=(40, 1), grab_anywhere=False,
+                   location=(0, 0), size=(1024, 600), keep_on_top=False).Finalize()
 
 # Maximize the window automatically
 # window.Maximize()
