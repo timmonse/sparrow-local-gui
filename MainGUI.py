@@ -25,7 +25,7 @@ layout = [
      ]]),
      sg.Frame('Camera Controls', [[
          sg.Button('Record', button_color=('white', 'red')), sg.Button('Pause', button_color=('black', 'yellow')),
-         sg.Button('Stop', button_color=('white', 'black'))
+         sg.Button('Resume', button_color=('white', 'green')), sg.Button('Stop', button_color=('white', 'black'))
      ], [sg.Text('Put the next row here')]])
      ],
     [sg.Submit(tooltip='Click to submit this window'), sg.Cancel()]
@@ -35,7 +35,7 @@ layout = [
 # Dimensions hardcoded to screen values
 # Add element_justification='c' to center the elements
 window = sg.Window('Sparrow v1', layout, no_titlebar=False, default_element_size=(40, 1), grab_anywhere=False,
-                   location=(0, 0), size=(1024, 600), keep_on_top=True).Finalize()
+                   location=(0, 0), size=(1024, 600), keep_on_top=True)
 
 # Maximize the window automatically
 # window.Maximize()
@@ -54,7 +54,7 @@ while True:
         # window.FindElement('_IMAGE_').Update(visible=False)
         # Pause and stop logic to go here
         timeout = 10000000
-    if event == "Record":
+    if event == "Record" or event == "Resume":
         timeout = 20
     if event == "Hide":
         window.FindElement('_IMAGE_').Update(visible=False)
