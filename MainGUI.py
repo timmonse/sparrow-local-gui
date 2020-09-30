@@ -20,10 +20,14 @@ layout = [
     [sg.Text('Video Storage Location', size=(17, 1), auto_size_text=False, justification='left'),
      sg.InputText('Default Folder'), sg.FolderBrowse()],
     [sg.Image(filename='', key='_IMAGE_', size=(40, 40)),
+     sg.Frame('Display Controls', [[
+         sg.Button('Hide', button_color=('white', 'Black')),sg.Button('Show', button_color=('white', 'Gray'))
+     ]]),
      sg.Frame('Camera Controls', [[
          sg.Button('Record', button_color=('white', 'red')), sg.Button('Pause', button_color=('black', 'yellow')),
          sg.Button('Stop', button_color=('white', 'black'))
-     ], [sg.Text('Put the next row here')]])],
+     ], [sg.Text('Put the next row here')]])
+     ],
     [sg.Submit(tooltip='Click to submit this window'), sg.Cancel()]
 ]
 
@@ -52,6 +56,10 @@ while True:
         timeout = 10000000
     if event == "Record":
         timeout = 20
+    if event == "Hide":
+        window.FindElement('_IMAGE_').Update(visible=False)
+    if event == "Show":
+        window.FindElement('_IMAGE_').Update(visible=True)
 
 window.close()
 
