@@ -2,6 +2,9 @@
 import PySimpleGUI as sg
 import cv2
 
+import subprocess
+import os
+
 # Use this to preview themes
 # sg.preview_all_look_and_feel_themes()
 
@@ -20,8 +23,8 @@ layout = [
     [sg.Text('Video Storage Location', size=(17, 1), auto_size_text=False, justification='left'),
      sg.InputText('Default Folder'), sg.FolderBrowse()],
     [sg.Image(filename='', key='_IMAGE_', size=(40, 40)),
-     sg.Frame('Display Controls', [[
-         sg.Button('Hide', button_color=('white', 'Black')),sg.Button('Show', button_color=('white', 'Gray'))
+     sg.Frame('Display Video Feed', [[
+         sg.Button('Hide/Show', button_color=('white', 'Black'))
      ]]),
      sg.Frame('Camera Controls', [[
          sg.Button('Record', button_color=('white', 'red')), sg.Button('Pause', button_color=('black', 'yellow')),
@@ -40,9 +43,14 @@ window = sg.Window('Sparrow v1', layout, no_titlebar=False, default_element_size
 # Maximize the window automatically
 # window.Maximize()
 
+# Terminal command tests
+# list_files = subprocess.run(["ls", "-l"])
+# print("The exit code was: %d" % list_files.returncode)
+
 # event, values = window.read()
 cap = cv2.VideoCapture(0)  # Setup the OpenCV capture device (webcam)
 timeout = 20
+isVisible = False
 while True:
     event, values = window.read(timeout=timeout, timeout_key='timeout')
     if event in (sg.WIN_CLOSED, 'Cancel'):
@@ -54,12 +62,16 @@ while True:
         # window.FindElement('_IMAGE_').Update(visible=False)
         # Pause and stop logic to go here
         timeout = 10000000
-    if event == "Record" or event == "Resume":
+    if event == "Resume":
         timeout = 20
-    if event == "Hide":
-        window.FindElement('_IMAGE_').Update(visible=False)
-    if event == "Show":
-        window.FindElement('_IMAGE_').Update(visible=True)
+    if event == "Hide/Show":
+        window.FindElement('_IMAGE_').Update(visible=isVisible)
+        isVisible = not isVisible
+    if event == "Record":
+        timeout = 20
+        print(os.listdir()) # This example will work on windows
+        # list_dir = subprocess.Popen(["ls", "-l"]) # This example will work on linux
+        # list_dir.wait()
 
 window.close()
 
