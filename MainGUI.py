@@ -51,6 +51,8 @@ window = sg.Window('Sparrow v1', layout, no_titlebar=False, default_element_size
 cap = cv2.VideoCapture(0)  # Setup the OpenCV capture device (webcam)
 timeout = 20
 isVisible = False
+output = "none"
+errors = "no errors"
 while True:
     event, values = window.read(timeout=timeout, timeout_key='timeout')
     if event in (sg.WIN_CLOSED, 'Cancel'):
@@ -69,9 +71,20 @@ while True:
         isVisible = not isVisible
     if event == "Record":
         timeout = 20
-        print(os.listdir()) # This example will work on windows
+        # print(os.listdir()) # This example will work on windows
+        # output = os.system("alpr webcam")
+        output = subprocess.call(["alpr", "webcam"], shell=True)
+        # print(output.stdout)
+        # print("hello")
         # list_dir = subprocess.Popen(["ls", "-l"]) # This example will work on linux
         # list_dir.wait()
+
+        # testOut = subprocess.Popen(["alpr", "webcam"], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+        #                                     stderr=subprocess.PIPE, text=True)
+        # output, errors = testOut.communicate()
+        # testOut.wait()
+    # print(output)
+    # print(errors)
 
 window.close()
 
