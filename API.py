@@ -1,3 +1,4 @@
+#API to be integrated with GUI
 from openalpr import Alpr
 
 alpr = Alpr("us", "/path/to/openalpr.conf", "/path/to/runtime_data")
