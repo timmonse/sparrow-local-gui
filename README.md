@@ -18,4 +18,4 @@ createVCamera*
 recordWebcam*
 videoSplit2*
 ```
-*This programs are simple bash scripts included with the repo
+*These programs are simple bash scripts included with the repo
