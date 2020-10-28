@@ -4,7 +4,7 @@ The Sparrow GUI is a graphical user interface designed to run locally on the NVI
 
 ## Dependencies
 
-The following are a list of packages/programs that are needed to use the GUI and recording/alpr features
+The following are a list of packages/programs that are needed to use the GUI and recording/alpr features (this may not be comprehensive)
 
 ```bash
 openalpr
@@ -18,3 +18,4 @@ createVCamera*
 recordWebcam*
 videoSplit2*
 ```
+*This programs are simple bash scripts included with the repo
