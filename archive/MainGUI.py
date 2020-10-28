@@ -53,7 +53,7 @@ window.Maximize()
 # print("The exit code was: %d" % list_files.returncode)
 
 # event, values = window.read()
-cap = cv2.VideoCapture(2)  # Setup the OpenCV capture device (webcam)
+cap = cv2.VideoCapture(1)  # Setup the OpenCV capture device (webcam)
 
 #Set above to 2 when testing split camera, 1 when testing other
 
