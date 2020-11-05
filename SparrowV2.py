@@ -40,7 +40,7 @@ window = sg.Window('Sparrow v2', layout, no_titlebar=False, default_element_size
 window.Maximize()
 
 # event, values = window.read()
-cap = cv2.VideoCapture(0)  # Setup the OpenCV capture device (webcam)
+cap = cv2.VideoCapture(2)# Setup the OpenCV capture device (webcam)
 
 timeout = 20
 isVisible = False
